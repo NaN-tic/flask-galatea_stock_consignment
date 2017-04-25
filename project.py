@@ -31,6 +31,7 @@ def project_detail(lang, id):
     projects = Project.search([
         ('id', '=', id),
         ('party', '=', customer),
+        ('galatea', '=', True),
         ], limit=1)
     if not projects:
         abort(404)
@@ -68,11 +69,33 @@ def project_list(lang):
 
     domain = [
         ('party', '=', session['customer']),
-        ('type', '=', 'project'),
+        ('galatea', '=', True),
         ]
+    q = request.args.get('q')
+    if q:
+        domain.append(('rec_name', 'ilike', '%'+q+'%'))
+        session.q = q
+    else:
+        domain.append(('type', '=', 'project'))
+        session.q = None
+    if hasattr(Project, 'galatea_domain'):
+        domain += Project.galatea_domain()
+
+    phase = request.args.get('phase', type=int)
+    if phase:
+        domain.append(('task_phase', '=', phase))
+        session.phase = phase
+    tracker = request.args.get('tracker', type=int)
+    if tracker:
+        domain.append(('tracker', '=', tracker))
+        session.tracker = tracker
+    priority = request.args.get('priority')
+    if priority:
+        domain.append(('priority', '=', priority))
+        session.priority = priority
+
     total = Project.search_count(domain)
     offset = (page-1)*LIMIT
-
     projects = Project.search(domain, offset, LIMIT)
 
     pagination = Pagination(
