@@ -28,11 +28,12 @@ def project_detail(lang, id):
     if not session.get('logged_in'):
         session.pop('customer', None)
 
-    projects = Project.search([
+    domain = [
         ('id', '=', id),
         ('party', '=', customer),
-        ('galatea', '=', True),
-        ], limit=1)
+        ]
+    domain += Project.galatea_domain()
+    projects = Project.search(domain, limit=1)
     if not projects:
         abort(404)
 
@@ -69,7 +70,6 @@ def project_list(lang):
 
     domain = [
         ('party', '=', session['customer']),
-        ('galatea', '=', True),
         ]
     q = request.args.get('q')
     if q:
@@ -78,8 +78,7 @@ def project_list(lang):
     else:
         domain.append(('type', '=', 'project'))
         session.q = None
-    if hasattr(Project, 'galatea_domain'):
-        domain += Project.galatea_domain()
+    domain += Project.galatea_domain()
 
     phase = request.args.get('phase', type=int)
     if phase:
