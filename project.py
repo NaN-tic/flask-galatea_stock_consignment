@@ -68,6 +68,7 @@ def project_list(lang):
     except ValueError:
         page = 1
 
+    filter = False
     domain = [
         ('party', '=', session['customer']),
         ]
@@ -75,23 +76,28 @@ def project_list(lang):
     if q:
         domain.append(('rec_name', 'ilike', '%'+q+'%'))
         session.q = q
-    else:
-        domain.append(('type', '=', 'project'))
-        session.q = None
+        filter = True
     domain += Project.galatea_domain()
 
     phase = request.args.get('phase', type=int)
     if phase:
         domain.append(('task_phase', '=', phase))
         session.phase = phase
+        filter = True
     tracker = request.args.get('tracker', type=int)
     if tracker:
         domain.append(('tracker', '=', tracker))
         session.tracker = tracker
+        filter = True
     priority = request.args.get('priority')
     if priority:
         domain.append(('priority', '=', priority))
         session.priority = priority
+        filter = True
+
+    if not filter:
+        domain.append(('type', '=', 'project'))
+        session.q = None
 
     total = Project.search_count(domain)
     offset = (page-1)*LIMIT
