@@ -37,7 +37,7 @@ def project_detail(lang, id):
     if not projects:
         abort(404)
 
-    project, = Project.browse(projects)
+    project, = projects
 
     #breadcumbs
     breadcrumbs = [{
