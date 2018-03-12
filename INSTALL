@@ -1,5 +1,5 @@
-Installing flask-galatea_project
-================================
+Installing flask-galatea_stock_consignment
+==========================================
 
 Prerequisites
 -------------
@@ -7,22 +7,16 @@ Prerequisites
  * Python 2.7 or later (http://www.python.org/)
  * trytond (http://www.tryton.org/)
  * trytond-galatea
- * trytond-project
-
-Optional
---------
-
- * trytond-project_shipment_cost
- * trytond-sproject_invoices_paid
- * trytond-project_shipments_done
+ * trytond-stock_consignment
 
 Installation
 ------------
 
-Once you've downloaded and unpacked the flask-galatea-catalog source release,
+Once you've downloaded and unpacked the flask-galatea-stock_consignment source release,
 copy galatea-catalog directory in main flask app and rename to catalog.
 
 Edit your App flask and register a new blueprint:
 
-from catalog import catalog
-app.register_blueprint(catalog, url_prefix='/<lang>/catalog')
+from stock_consignment import stock_consignment
+app.register_blueprint(stock_consignment,
+    url_prefix='/<lang>/stock_consignment')

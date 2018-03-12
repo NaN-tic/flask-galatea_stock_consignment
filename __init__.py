@@ -1,2 +1,2 @@
-from project import *
+from stock_consignment import *
 

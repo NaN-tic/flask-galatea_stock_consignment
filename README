@@ -1,7 +1,7 @@
-flask-galatea-project
+flask-galatea-stock_consignment
 =====================
 
-The Galatea Project module of the Flask application platform.
+The Galatea Stock Consignment module of the Flask application platform.
 
 Installing
 ----------
@@ -14,10 +14,10 @@ Support
 For more information or if you encounter any problems with this module,
 please contact the programmers at
 
-  Zikzakmedia
+  Nan-Tic
   --------------
-  website: http://www.zikzakmedia.com/
-  email: zikzak@zikzakmedia.com
+  website: http://www.nan-tic.com/
+  email: info@nan-tic.com
 
 If you encounter any problems with Tryton, please don't hesitate to ask
 questions on the Tryton bug tracker, mailing list, wiki or IRC channel:
