@@ -25,7 +25,7 @@ def stock_list(lang):
     '''Stocks'''
 
     domain = [
-        ('product_suppliers.party', '=', session['customer']),
+        ('template.product_suppliers.party', '=', session['customer']),
         ]
     products = Product.search(domain)
     locations = Location.search([
@@ -48,7 +48,7 @@ def stock_list(lang):
     pbl = {}
     if location_ids and product_ids:
         pbl = Product.products_by_location(location_ids=location_ids,
-            product_ids=product_ids)
+            grouping_filter=(product_ids,))
     stock = {}
     for product_id in product_ids:
         product = Product(product_id)
